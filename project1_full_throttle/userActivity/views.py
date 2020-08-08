@@ -2,11 +2,6 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 # Create your views here.
 
-
-def home(request):
-	result = {'name':'Ravi'}
-	return JsonResponse(result)
-
 import random
 import string
 from datetime import datetime, timedelta
@@ -16,7 +11,17 @@ from pandas import DataFrame
 from userActivity.configs import ravi_db as mongo_db
 from userActivity.user_config import user_details
 
+"""
+server check method
+"""
+def home(request):
+	result = {'status':'running'}
+	return JsonResponse(result)
 
+
+"""
+1. method to store user details in database.
+"""
 def store_user_details_in_database():
     records = []
     try:
@@ -33,6 +38,9 @@ def store_user_details_in_database():
         print('Exception in store_user_details_in_database:', str(ex))
 
 
+"""
+1. Method to store users activity in database.
+"""
 def store_user_activity_in_database():
     try:
         user_data = list(mongo_db['user_details'].find({}, {'_id': 0, 'user_id': 1}))
@@ -56,6 +64,10 @@ def store_user_activity_in_database():
         print('Exception in store_user_activity_in_database:', str(ex))
 
 
+
+"""
+1. Method to return user activity_periods in the required format.
+"""
 def get_user_activity_period(user_id, section):
     try:
         activity_records = []
@@ -70,6 +82,11 @@ def get_user_activity_period(user_id, section):
         print('Exception in get_user_activity_period:', str(ex))
 
 
+
+"""
+1. Method to return the response to a get request with key arguments as section(section is the pages 
+   on th website) in the required format.
+"""
 def calculate_response_for_user(request):
     try:
         members_records = []
