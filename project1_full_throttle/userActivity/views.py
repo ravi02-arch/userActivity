@@ -85,7 +85,7 @@ def get_user_activity_period(user_id, section):
 
 """
 1. Method to return the response to a get request with key arguments as section(section is the pages 
-   on th website) in the required format.
+   on th application) in the required format.
 """
 def calculate_response_for_user(request):
     try:
